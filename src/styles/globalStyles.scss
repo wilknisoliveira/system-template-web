@@ -1,8 +1,21 @@
+:root {
+  --body-background: white;
+  --body-color: black;
+  --link-color: navy;
+}
+
+[data-theme="dark"] {
+  --body-background: #283c34;
+  --body-color: white;
+  --link-color: cyan;
+}
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
+  transition: all 0.3s ease-in-out;
 }
 
 html,
