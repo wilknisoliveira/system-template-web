@@ -1,7 +1,7 @@
+import { useEffect, useState, type ChangeEvent } from "react";
+
 const ThemeToggle = () => {
   const getStoredTheme = () => localStorage.getItem("theme");
-  const setStoredTheme = (theme: string) =>
-    localStorage.setItem("theme", theme);
 
   const getPreferredTheme = () => {
     const storedTheme = getStoredTheme();
@@ -9,43 +9,30 @@ const ThemeToggle = () => {
       return storedTheme;
     }
 
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
+    return "auto";
+  };
+
+  const getSystemTheme = () =>
+    window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";
+
+  const applyTheme = (theme: string) => {
+    const resolvedTheme =
+      theme != "dark" && theme != "light" ? getSystemTheme() : theme;
+
+    document.documentElement.setAttribute("data-bs-theme", resolvedTheme);
   };
 
-  const setTheme = (theme: string) => {
-    if (theme === "auto") {
-      document.documentElement.setAttribute(
-        "data-bs-theme",
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light",
-      );
-    } else {
-      document.documentElement.setAttribute("data-bs-theme", theme);
-    }
-  };
+  const [theme, setTheme] = useState(getPreferredTheme());
 
-  setTheme(getPreferredTheme());
+  useEffect(() => {
+    applyTheme(theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
-  window
-    .matchMedia("(prefers-color-scheme: dark)")
-    .addEventListener("change", () => {
-      const storedTheme = getStoredTheme();
-      if (storedTheme !== "light" && storedTheme !== "dark") {
-        setTheme(getPreferredTheme());
-      }
-    });
-
-  const toggleTheme = (e: any) => {
-    if (e.target.checked) {
-      setTheme("dark");
-      setStoredTheme("dark");
-    } else {
-      setTheme("light");
-      setStoredTheme("light");
-    }
+  const toggleTheme = (e: ChangeEvent<HTMLInputElement>) => {
+    setTheme(e.target.checked ? "dark" : "light");
   };
 
   return (
@@ -57,12 +44,10 @@ const ThemeToggle = () => {
         id="switchCheckDefault"
         onChange={toggleTheme}
         style={{ cursor: "pointer" }}
-        defaultChecked={getPreferredTheme() === "dark"}
+        checked={theme === "dark"}
       />
-      <label className={`form-check-label`} htmlFor="switchCheckDefault">
-        {getPreferredTheme() === "light"
-          ? "Enable Dark Mode"
-          : "Enable Light Mode"}
+      <label className="form-check-label" htmlFor="switchCheckDefault">
+        {theme === "light" ? "Enable Dark Mode" : "Enable Light Mode"}
       </label>
     </div>
   );
