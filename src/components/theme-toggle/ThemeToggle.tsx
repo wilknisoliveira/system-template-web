@@ -1,27 +1,50 @@
 const ThemeToggle = () => {
-  const setDarkMode = () => {
-    document.querySelector("body")?.setAttribute("data-theme", "dark");
-    localStorage.setItem("theme", "dark");
-  };
-  const setLightMode = () => {
-    document.querySelector("body")?.setAttribute("data-theme", "light");
-    localStorage.setItem("theme", "light");
+  const getStoredTheme = () => localStorage.getItem("theme");
+  const setStoredTheme = (theme: string) =>
+    localStorage.setItem("theme", theme);
+
+  const getPreferredTheme = () => {
+    const storedTheme = getStoredTheme();
+    if (storedTheme) {
+      return storedTheme;
+    }
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
   };
 
-  const selectedTheme = localStorage.getItem("theme");
-  let textColor = selectedTheme === "dark" ? "light" : "dark";
-  if (selectedTheme === "dark") {
-    setDarkMode();
-    textColor = "light";
-  }
+  const setTheme = (theme: string) => {
+    if (theme === "auto") {
+      document.documentElement.setAttribute(
+        "data-bs-theme",
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light",
+      );
+    } else {
+      document.documentElement.setAttribute("data-bs-theme", theme);
+    }
+  };
+
+  setTheme(getPreferredTheme());
+
+  window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", () => {
+      const storedTheme = getStoredTheme();
+      if (storedTheme !== "light" && storedTheme !== "dark") {
+        setTheme(getPreferredTheme());
+      }
+    });
 
   const toggleTheme = (e: any) => {
     if (e.target.checked) {
-      setDarkMode();
-      textColor = "light";
+      setTheme("dark");
+      setStoredTheme("dark");
     } else {
-      setLightMode();
-      textColor = "dark";
+      setTheme("light");
+      setStoredTheme("light");
     }
   };
 
@@ -32,15 +55,14 @@ const ThemeToggle = () => {
         type="checkbox"
         role="switch"
         id="switchCheckDefault"
-        onClick={toggleTheme}
+        onChange={toggleTheme}
         style={{ cursor: "pointer" }}
-        defaultChecked={selectedTheme === "dark"}
+        defaultChecked={getPreferredTheme() === "dark"}
       />
-      <label
-        className={`form-check-label text-${textColor}`}
-        htmlFor="switchCheckDefault"
-      >
-        {selectedTheme === "light" ? "Enable Dark Mode" : "Enable Light Mode"}
+      <label className={`form-check-label`} htmlFor="switchCheckDefault">
+        {getPreferredTheme() === "light"
+          ? "Enable Dark Mode"
+          : "Enable Light Mode"}
       </label>
     </div>
   );
