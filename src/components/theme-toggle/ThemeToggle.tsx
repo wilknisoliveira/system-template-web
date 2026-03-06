@@ -1,4 +1,6 @@
 import { useEffect, useState, type ChangeEvent } from "react";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 
 const ThemeToggle = () => {
   const getStoredTheme = () => localStorage.getItem("theme");
@@ -36,20 +38,15 @@ const ThemeToggle = () => {
   };
 
   return (
-    <div className="form-check form-switch">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        role="switch"
-        id="switchCheckDefault"
-        onChange={toggleTheme}
-        style={{ cursor: "pointer" }}
-        checked={theme === "dark"}
-      />
-      <label className="form-check-label" htmlFor="switchCheckDefault">
-        {theme === "light" ? "Enable Dark Mode" : "Enable Light Mode"}
-      </label>
-    </div>
+    <DropdownButton
+      id="dropdown-basic-button"
+      variant="secondary"
+      title={`${theme}`}
+    >
+      <Dropdown.Item onClick={() => setTheme("auto")}>auto</Dropdown.Item>
+      <Dropdown.Item onClick={() => setTheme("light")}>light</Dropdown.Item>
+      <Dropdown.Item onClick={() => setTheme("dark")}>dark</Dropdown.Item>
+    </DropdownButton>
   );
 };
 
