@@ -1,6 +1,9 @@
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import { MdDarkMode } from "react-icons/md";
+import { MdLightMode } from "react-icons/md";
+import { MdLaptop } from "react-icons/md";
 
 const ThemeToggle = () => {
   const getStoredTheme = () => localStorage.getItem("theme");
@@ -26,26 +29,53 @@ const ThemeToggle = () => {
     document.documentElement.setAttribute("data-bs-theme", resolvedTheme);
   };
 
+  const getButtonIcon = (theme: string) => {
+    switch (theme) {
+      case "dark":
+        return (
+          <>
+            <MdDarkMode /> dark
+          </>
+        );
+      case "light":
+        return (
+          <>
+            <MdLightMode /> light
+          </>
+        );
+      default:
+        return (
+          <>
+            <MdLaptop /> auto
+          </>
+        );
+    }
+  };
+
   const [theme, setTheme] = useState(getPreferredTheme());
+  const [buttonIcon, setButtonIcon] = useState<ReactNode | null>(null);
 
   useEffect(() => {
     applyTheme(theme);
     localStorage.setItem("theme", theme);
+    setButtonIcon(getButtonIcon(theme));
   }, [theme]);
-
-  const toggleTheme = (e: ChangeEvent<HTMLInputElement>) => {
-    setTheme(e.target.checked ? "dark" : "light");
-  };
 
   return (
     <DropdownButton
       id="dropdown-basic-button"
       variant="secondary"
-      title={`${theme}`}
+      title={buttonIcon}
     >
-      <Dropdown.Item onClick={() => setTheme("auto")}>auto</Dropdown.Item>
-      <Dropdown.Item onClick={() => setTheme("light")}>light</Dropdown.Item>
-      <Dropdown.Item onClick={() => setTheme("dark")}>dark</Dropdown.Item>
+      <Dropdown.Item onClick={() => setTheme("auto")}>
+        <MdLaptop /> auto
+      </Dropdown.Item>
+      <Dropdown.Item onClick={() => setTheme("light")}>
+        <MdLightMode /> light
+      </Dropdown.Item>
+      <Dropdown.Item onClick={() => setTheme("dark")}>
+        <MdDarkMode /> dark
+      </Dropdown.Item>
     </DropdownButton>
   );
 };
