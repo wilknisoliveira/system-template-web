@@ -1,13 +1,45 @@
 :root {
-  --body-background: white;
-  --body-color: black;
-  --link-color: navy;
+  --color-background: var(--bs-body-bg);
+  --color-surface: var(--bs-secondary-bg);
+  --color-surface-elevated: var(--bs-tertiary-bg);
+
+  --color-primary: var(--bs-primary);
+  --color-primary-bg: var(--bs-primary-bg-subtle);
+  --color-secondary: var(--bs-secondary-color);
+  --color-accent: var(--bs-info);
+
+  --color-text: var(--bs-body-color);
+  --color-text-muted: var(--bs-secondary-color);
+  --color-text-inverse: var(--bs-light);
+
+  --color-border: var(--bs-border-color);
+  --color-border-muted: var(--bs-border-color-translucent);
+
+  --color-success: var(--bs-success);
+  --color-warning: var(--bs-warning);
+  --color-danger: var(--bs-danger);
 }
 
 [data-bs-theme="dark"] {
-  --body-background: #283c34;
-  --body-color: white;
-  --link-color: cyan;
+  --color-background: var(--bs-body-bg);
+  --color-surface: var(--bs-secondary-bg);
+  --color-surface-elevated: var(--bs-tertiary-bg);
+
+  --color-primary: var(--bs-primary);
+  --color-primary-bg: var(--bs-primary-bg-subtle);
+  --color-secondary: var(--bs-secondary-color);
+  --color-accent: var(--bs-info);
+
+  --color-text: var(--bs-body-color);
+  --color-text-muted: var(--bs-secondary-color);
+  --color-text-inverse: var(--bs-light);
+
+  --color-border: var(--bs-border-color);
+  --color-border-muted: var(--bs-border-color-translucent);
+
+  --color-success: var(--bs-success);
+  --color-warning: var(--bs-warning);
+  --color-danger: var(--bs-danger);
 }
 
 * {
@@ -20,7 +52,8 @@
 html,
 body,
 #root {
-  background-color: #efefef;
+  background-color: var(--color-background);
+  color: var(--bs-body-color);
   width: 100%;
   height: 100%;
 }
