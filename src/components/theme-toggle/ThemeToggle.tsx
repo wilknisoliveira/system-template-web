@@ -5,6 +5,8 @@ import { MdDarkMode } from "react-icons/md";
 import { MdLightMode } from "react-icons/md";
 import { MdLaptop } from "react-icons/md";
 
+import "./ThemeToggle.scss";
+
 const ThemeToggle = () => {
   const getStoredTheme = () => localStorage.getItem("theme");
 
@@ -32,23 +34,11 @@ const ThemeToggle = () => {
   const getButtonIcon = (theme: string) => {
     switch (theme) {
       case "dark":
-        return (
-          <>
-            <MdDarkMode /> dark
-          </>
-        );
+        return <MdDarkMode />;
       case "light":
-        return (
-          <>
-            <MdLightMode /> light
-          </>
-        );
+        return <MdLightMode />;
       default:
-        return (
-          <>
-            <MdLaptop /> auto
-          </>
-        );
+        return <MdLaptop />;
     }
   };
 
