@@ -8,7 +8,7 @@ export default function Login() {
     <>
       <section>
         <div className="main-container">
-          <div className="auth-section">
+          <div className="auth-section login-section">
             <div className="login-section-content">
               <h1>Sign in</h1>
               <Form className="d-grid gap-2">
@@ -29,9 +29,9 @@ export default function Login() {
               </Form>
             </div>
           </div>
-          <div className="auth-section side-section">
+          <nav className="auth-section side-section">
             <h2>Welcome back!</h2>
-          </div>
+          </nav>
         </div>
       </section>
     </>

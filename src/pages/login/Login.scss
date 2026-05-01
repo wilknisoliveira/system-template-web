@@ -10,7 +10,7 @@ section {
     justify-content: space-around;
     align-items: center;
 
-    width: 95%;
+    width: 90%;
     height: 90%;
 
     border-radius: 2rem;
@@ -23,14 +23,21 @@ section {
       align-items: center;
 
       height: 100%;
-      width: 50%;
     }
 
-    .login-section-content {
-      width: 70%;
+    .login-section {
+      width: 40%;
+      .login-section-content {
+        width: 70%;
+
+        h1 {
+          margin-bottom: 2rem;
+        }
+      }
     }
 
     .side-section {
+      width: 60%;
       background: linear-gradient(
         135deg,
         var(--color-primary-bg),
