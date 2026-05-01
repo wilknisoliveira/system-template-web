@@ -4,7 +4,6 @@ function AuthLayout() {
   return (
     <>
       <Outlet />
-      <footer>Footer</footer>
     </>
   );
 }
